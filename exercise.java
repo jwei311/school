@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class exercise{
+    public static void main(String[]args){
+
+        try (Scanner input = new Scanner(System.in)) {
+            double [] marks = new double[100];
+            double check_marks;
+            int count = 0;
+            double avg = 0;
+            double total_marks = 0;
+            int higher_than = 0;
+            int lower_than = 0;
+
+            for(int i=0 ; i<100 ; i++){
+                System.out.print("Enter marks : ");
+                check_marks = input.nextDouble();
+                if(check_marks<=100 && check_marks>=0){
+                    marks[i] = check_marks; 
+                    count = count + 1;
+                    System.out.println("Key in any negative number to quit.");
+                    System.out.println("");
+                }
+                else if(check_marks<0){
+                    System.out.println("You leaved now");
+                    System.out.println("");
+                    break;
+                }
+                else{
+                    System.out.println("Invalid input");
+                    System.out.println("");
+                }
+            }
+            
+            for(int i=0 ; i<100 ; i++){
+                total_marks = total_marks + marks[i];
+                avg = total_marks/count;
+            }
+
+            for(int i=0 ; i<count ; i++){
+                if(marks[i] < avg){
+                    lower_than ++;
+                }
+                else if(marks[i] >= avg){
+                    higher_than ++;
+                }
+
+            }
+            System.out.println("Total input : " + count);
+            System.out.println("Total marks : " + total_marks);
+            System.out.println("average marks : " + avg);
+            System.out.println("");
+            System.out.println(higher_than + " is higher than average.");
+            System.out.println(lower_than + " is lower than average.");
+        }
+
+
+    }
+}
