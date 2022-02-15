@@ -1,3 +1,10 @@
+/*
+Write a program that reads an unspecified number of scores and determines how many 
+scores are above or equal to the average and how many are below the average. 
+Enter a negative number to signify the end of input. Assume maximum number of scores is 100.
+*/
+
+
 import java.util.Scanner;
 
 public class exercise{
