@@ -4,47 +4,47 @@
 using namespace std;
 
 class stack{
-	int a[SIZE];
-	int tos;
+	int a[SIZE];    //array to store data
+	int tos;    //top of stack
 	public:
 		stack();
 		int isempty();
 		int isfull();
 		void push(int);
-		int pop();
+		void pop();
 		void display();
 };
 
 stack::stack(){
-	tos=0;
+	tos=0;    //initialize top of stack
 }
 
 int stack::isempty(){
-	return(tos==0);
+	return(tos==0);      //tos 0 means stack is empty
 }
 
 int stack::isfull(){
-	return(tos==SIZE);
+	return(tos==SIZE);    //SIZE is 20 , so stack is full when it is 20
 }
 
 void stack::push(int i){
 	
-	if(!isfull()){
+	if(!isfull()){                       //if not full only process "puss"
 		cout<<"Pushing "<<i<<endl;
-		a[tos]=i;
-		tos++;
+		a[tos]=i;                    //tos represent 现在的stack level.
+		tos++;                       //after push , the stack level(tos) must +1
 	}
 	else{
 		cerr<<"Stack overflow , error ! \n";
 	}
 }
 
-int stack::pop(){
+void stack::pop(){
 	
-	if(!isempty()){
+	if(!isempty()){                              //if not empty only process “pop"
 		
 		cout<<"Popping "<<a[tos-1]<<endl;
-		return(a[--tos]);
+		tos--;                               //after pop , the stack level(tos) must -1
 	}
 	else{
 		cerr<<"Stack is empty ! \n";
