@@ -29,9 +29,9 @@ int stack::isfull(){
 
 void stack::push(int i){
 	
-	if(!isfull()){                       //if not full only process "puss"
+	if(!isfull()){                       //if not full only process "push"
 		cout<<"Pushing "<<i<<endl;
-		a[tos]=i;                    //tos represent 现在的stack level.
+		a[tos]=i;                     
 		tos++;                       //after push , the stack level(tos) must +1
 	}
 	else{
