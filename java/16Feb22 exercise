@@ -1,0 +1,40 @@
+/*
+Write a program that reads the integers between 1 and 50, inclusively,
+and counts the occurrences of each. Assume the input ends with 0. 
+*/
+
+import java.util.Scanner;
+
+public class exercise{
+    public static void main(String[]args){
+        try (Scanner input = new Scanner(System.in)) {
+            int [] storage = new int[50];
+            int enter;
+            int exit = 0;
+
+            while(exit != 1 ){
+                System.out.print("Enter number between 1-50 : ");
+                enter = input.nextInt();
+                if(enter>=1 && enter<=50){
+                    storage[enter]++;
+                }
+                else if(enter == 0){
+                    exit ++;
+                }
+                else{
+                    System.out.println("invalid input !");
+                }
+            }
+
+            for(int i=0 ; i<=50 ; i++){
+                if(storage[i] != 0){
+                    System.out.println(i + " occures " + storage[i] + " times.");
+                }
+                else{
+                    continue;
+                }
+            }
+        }
+
+
+    }
