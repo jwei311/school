@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+class linklist
+{   private:
+        struct node
+        {
+            int info;
+            node *link;
+        }*head;   // node *head;        
+     public:
+         linklist();
+         void InsNewLastNode(int value);
+         void PrintList();
+         void partA();
+         void partB();
+         void partC();
+         void partD();
+         void partE();
+         void partF();
+         ~linklist();
+};
+
+linklist::linklist()
+{
+     head=NULL;
+}
+
+linklist::~linklist()
+{
+   node *q;
+   if( head == NULL )
+        return;
+
+   while( head != NULL )
+   {
+      q = head->link;
+      delete head;
+      head = q;
+   }
+}
+/* Print All the Items from a Linked List */    
+void linklist::PrintList()
+{    node *current;
+    current = head;    
+    cout<<"(";
+    //cout<<"current point to head"<<endl;    
+    while (current != NULL)
+    {
+        cout << current->info;
+    	current = current->link;
+    			
+       if (current != NULL)
+    		cout<<",";
+    }    		
+    cout<<")"<<endl;
+}
+
+
+/* Inserting a New Node at the Last Position of a Linked List */
+void linklist::InsNewLastNode(int value)
+{	node *newNode, *P;
+	newNode = new node;
+	newNode->info = value;
+	newNode->link = NULL;	
+    if (head == NULL)
+       head = newNode;
+    else
+    { 	P = head;
+    	
+        while ((P->link) != NULL)
+    		P = P->link;
+    		
+        P->link = newNode;
+     }
+     
+}
+
+void linklist::partA(){
+     //missing statments
+}
+void linklist::partB(){
+     //missing statments
+}
+void linklist::partC(){
+     //missing statments
+}
+void linklist::partD(){
+     //missing statments
+}
+void linklist::partE(){
+     //missing statments
+}
+void linklist::partF(){
+     //missing statments
+}
+
+
+int main()
+{      
+    linklist LList;
+    int x;
+
+    LList.InsNewLastNode(3);
+    LList.InsNewLastNode(16);
+    LList.InsNewLastNode(27);
+    LList.InsNewLastNode(45);
+    cout<<"Original List"<<endl;
+    LList.PrintList();
+    
+    cout<<"a) Add node number 1"<<endl;
+    LList.partA();
+    LList.PrintList();
+    
+    cout<<"b) Add node number 9"<<endl;
+    LList.partB();
+    LList.PrintList();
+    
+    cout<<"c) Add node number 50"<<endl;
+    LList.partC();
+    LList.PrintList();
+    
+    cout<<"d) Delete node number 1"<<endl;
+    LList.partD();
+    LList.PrintList();
+    
+    cout<<"e) Delete node number 27"<<endl;
+    LList.partE();
+    LList.PrintList();
+    
+    cout<<"f) Delete node number 50"<<endl;
+    LList.partF();
+    LList.PrintList();
+  
+    getchar();
+    return 0;
+}
