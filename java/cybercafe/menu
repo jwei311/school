@@ -1,278 +1,47 @@
 import java.util.Scanner;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Timer;
-import java.util.TimerTask;
 
-
-public class menu {
-    String [] places = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"};
-    String [] times = new String[51];
+public class cybercafe {
     
-    public void displayTime(){
-        LocalTime Time = LocalTime.now();
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        String formatedTime = Time.format(time);
-        System.out.println(formatedTime);
-    }
-
-    public void endTime(int use , int place){
-        LocalTime Time = LocalTime.now();
-        DateTimeFormatter hour = DateTimeFormatter.ofPattern("HH");
-        DateTimeFormatter min_sec = DateTimeFormatter.ofPattern("mm:ss");
-
-        String formatedHour = Time.format(hour);
-        String formated_min_sec = Time.format(min_sec);
-
-        times[place] ="\u001B[33m" + "Status : In-Use\n" + "End Time : " + (Integer.parseInt(formatedHour) + use) + ":" + formated_min_sec + "\u001B[0m\n";
-    }
-
-    public void displayPlaces(){
-        System.out.println("CyberNet Cafe");
-        for(int i=1 ; i<=50 ; i++){
-            if(i<=10){
-                System.out.print("\u001B[32m" + places[i] + "\u001B[0m"  + "  ");
-                if(i==10){
-                    System.out.println("\n");
-                }
-            }
-            else if(i<=20){
-                System.out.print("\u001B[32m" + places[i] + "\u001B[0m"  + " ");
-                if(i==20){
-                    System.out.println("\n");
-                }
-            }
-            else if(i<=30){
-                System.out.print("\u001B[32m" + places[i] + "\u001B[0m"  + " ");
-                if(i==30){
-                    System.out.println("\n");
-                }
-            }
-            else if(i<=40){
-                System.out.print("\u001B[32m" + places[i] + "\u001B[0m"  + " ");
-                if(i==40){
-                    System.out.println("\n");
-                }
-            }
-            else if(i<=50){
-                System.out.print("\u001B[32m" + places[i] + "\u001B[0m"  + " ");
-                if(i==50){
-                    System.out.println("\n");
-                }
-            }
-        }
-
-                         
-    }
-
-    public void instruction(){
-        System.out.println("\u001B[32mgreen:available \u001B[0m\n" + 
-                           "\u001B[31mred:unavailable \u001B[0m\n" +
-                           "\u001B[34mblue:reserved \u001B[0m\n" +
-                           "\u001B[33myellow:in-use \u001B[0m\n");
-    }
-
-    public void Menu(){
-        System.out.println("1.register\n" + 
-                           "2.update status\n" +
-                           "3.check status\n" +
-                           "0.refresh"
-                           );  
-    }
-    
-    public void register(){
+    public static void main(String[]args){
         Scanner input = new Scanner(System.in);
-        int choosePlace;
-        String hours;
-        String placeNum;
-
-        System.out.print("how many places(max 10): ");
-         placeNum = input.nextLine();
         
-        if(placeNum.equals("1") ||placeNum.equals("2") || placeNum.equals("3") || placeNum.equals("4") || placeNum.equals("5") || placeNum.equals("6") || placeNum.equals("7") || placeNum.equals("8") || placeNum.equals("9") || placeNum.equals("10")){
-            System.out.print("maximum:5hours\nuse time(in hours): ");
-            hours = input.nextLine();
-            if(hours.equals("1") || hours.equals("2") || hours.equals("3") || hours.equals("4") || hours.equals("5")){
+        
+        menu myobj = new menu();
+        myobj.displayPlaces();
+        myobj.Menu();
+
+        for(;;){
+            System.out.print("\n-->");
+            String choice = input.nextLine();
+            if(choice.equals("0")){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                displayPlaces();
-                System.out.println("");
-                System.out.println("choose " + placeNum + " places \n");
-                int i=1;
-                while(i != Integer.parseInt(placeNum)+1){
-                    System.out.print("select place " + i + ": ");
-                    choosePlace = input.nextInt();
-                    if(choosePlace<=50 && choosePlace>0){  
-                        places[choosePlace] = "\u001B[33m" + choosePlace + "\u001B[0m";
-                        endTime(Integer.parseInt(hours), choosePlace);
-                        countdown(Integer.parseInt(hours), choosePlace);
-                        i++;
-                    }
-                    else{
-                        System.out.println("Invalid");
-                    }
-                }
-                
-                System.out.println("\u001B[35m" + placeNum + " places" + "\u001B[0m");
-                System.out.println("\u001B[35m" + hours + " hours each" + "\u001B[0m");
-                System.out.println("\u001B[35m" + "Total Payment: " + "RM" + Integer.parseInt(placeNum)*Integer.parseInt(hours)*4 + "\u001B[0m");
-                System.out.print("Start time : "); 
-                displayTime();
-                System.out.println("0.done\n2.edit");
+                myobj.displayPlaces();
+                myobj.Menu();
             }
-            else{
+            else if(choice.equals("1")){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                System.out.println("invalid input , please re-enter");
-                register();
+                myobj.register();
             }
-
-        }
-        else{
-            System.out.println("error");
-            register();
-        }
-        
-        
-        
-    }
-
-    public void MenuUpdateInUseStatus(){
-        System.out.println("\u001B[32m1.become available \u001B[0m\n" + 
-                           "\u001B[31m2.become unavailable \u001B[0m\n" +
-                           "\u001B[33m3.become in-use \u001B[0m\n" 
-                           );
-    }
-
-    public void updateStatus(){
-        Scanner input = new Scanner(System.in);
-        String choice = "0";
-        String placeNum;
-        displayPlaces();
-
-        while(choice != "-1"){
-            System.out.print("press -1 to exit\nPlaces: ");
-            placeNum = input.nextLine();
-            if(!"-1".equals(placeNum) && (placeNum.contains("1")  || placeNum.contains("2") || placeNum.contains("3") || placeNum.contains("4") || placeNum.contains("5") || placeNum.contains("6") || placeNum.contains("7") || placeNum.contains("8") ||placeNum.contains("9"))){
-                if(Integer.parseInt(placeNum) <= 50){
-                    System.out.print("\033[H\033[2J");  
-                    System.out.flush();
-                    displayPlaces();
-                    MenuUpdateInUseStatus();
-                    System.out.print(placeNum + " to --> ");
-                    choice = input.nextLine();
-                    if(choice.equals("1")){
-                        places[Integer.parseInt(placeNum)]="\u001B[32m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become available\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[32m" + "available" + "\u001B[0m\n";
-                    }
-                    else if(choice.equals("2")){
-                        places[Integer.parseInt(placeNum)]="\u001B[31m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become unavailable\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[31m" + "unavailable" + "\u001B[0m\n";
-                    }
-                    else if(choice.equals("3")){
-                        places[Integer.parseInt(placeNum)]="\u001B[33m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become in use\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[33m" + "in-use" + "\u001B[0m\n";
-                        
-                    }
-                    else{
-                        System.out.println("invalid\n");
-                    }
-                }
-                else{
-                    System.out.println("invalid");
-                }
-            }
-            else if(placeNum.equals("-1")){
+            else if(choice.equals("2")){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                displayPlaces();
-                Menu();
-                break;
+                myobj.updateStatus();
             }
-            else{
+            else if(choice.equals("3")){
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                System.out.println("Invalid input");
-                updateStatus();
-                break;
+                myobj.displayPlaces();
+                myobj.status();
             }
-
-        }
-
-        
-
-    }
-
-    public void countdown(int hours , int place){
-        int countdown = (hours*60*60000);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run(){
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                Menu();
-                places[place] =  "\u001B[32m" + place + "\u001B[0m";
-            }
-        }, countdown);
-    
-        
-        
-
-    }
-
-    public void status(){
-        Scanner input = new Scanner(System.in);
-        String enter = "null";
-
-        while(!"0".equals(enter)){
-            System.out.print("Enter 0 to quit\nPlace to check: ");
-            enter = input.nextLine();
-            if(enter.contains("1") || enter.contains("2") || enter.contains("3") || enter.contains("4") || enter.contains("5") || enter.contains("6") || enter.contains("7") || enter.contains("8") ||enter.contains("9")){
-                if(Integer.parseInt(enter)<=50 && Integer.parseInt(enter)>0){
-                    checkStatus(Integer.parseInt(enter));
-                }
-                else{
-                    System.out.println("invalid");
-                }
-            }
-            else if(enter.equals("0")){
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                Menu();
+            else if(choice.equals("4")){
+                myobj.checkTotalIncome();
             }
             else{
                 System.out.println("invalid");
             }
-            
         }
-    }
-    
-    public void checkStatus(int check){
-        
-        if(times[check] != null){
-            System.out.println(times[check]);
-        }
-        else{
-            System.out.println("\u001B[32m" + "available" + "\u001B[0m\n");
-        }
-        
-        
-    }
 
-
+    }
 }
