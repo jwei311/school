@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class cybercafe {
+    
+    public static void main(String[]args){
+        Scanner input = new Scanner(System.in);
+        
+        
+        menu myobj = new menu();
+        myobj.displayPlaces();
+        myobj.instruction();
+        myobj.Menu();
+
+        for(;;){
+            System.out.print("\n-->");
+            String choice = input.nextLine();
+            if(choice.equals("0")){
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                myobj.displayPlaces();
+                myobj.Menu();
+            }
+            else if(choice.equals("1")){
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                myobj.register();
+            }
+            else if(choice.equals("2")){
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                myobj.updateStatus();
+            }
+            else if(choice.equals("3")){
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                myobj.displayPlaces();
+                myobj.status();
+            }
+            else{
+                System.out.println("invalid");
+            }
+        }
+
+    }
+}
