@@ -1,0 +1,19 @@
+#include<iostream>
+using namespace std;
+
+int functionA(int x , int y){
+	if(y==0){
+		return 0;
+	}
+	else{
+		return x + functionA(x,y-1);
+	}
+}
+
+int main(){
+	
+	int passcode = functionA(3 , 5);
+	cout<<passcode;
+	
+	return 0;
+}
