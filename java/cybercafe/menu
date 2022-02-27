@@ -77,63 +77,67 @@ public class menu {
     }
     
     public void register(){
-        Scanner input = new Scanner(System.in);
-        int choosePlace;
-        String hours;
-        String placeNum;
+        try (Scanner input = new Scanner(System.in)) {
+            int choosePlace;
+            String hours;
+            String placeNum;
 
-        System.out.print("press 0 to quit\nhow many places(max 10): ");
-         placeNum = input.nextLine();
-        
-        if(placeNum.equals("1") ||placeNum.equals("2") || placeNum.equals("3") || placeNum.equals("4") || placeNum.equals("5") || placeNum.equals("6") || placeNum.equals("7") || placeNum.equals("8") || placeNum.equals("9") || placeNum.equals("10")){
-            System.out.print("maximum:5hours\nuse time(in hours): ");
-            hours = input.nextLine();
-            if(hours.equals("1") || hours.equals("2") || hours.equals("3") || hours.equals("4") || hours.equals("5")){
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                System.out.println("");
-                System.out.println("choose " + placeNum + " places \n");
-                int i=1;
-                while(i != Integer.parseInt(placeNum)+1){
-                    System.out.print("select place " + i + ": ");
-                    choosePlace = input.nextInt();
-                    if(choosePlace<=50 && choosePlace>0){  
-                        places[choosePlace] = "\u001B[33m" + choosePlace + "\u001B[0m";
-                        endTime(Integer.parseInt(hours), choosePlace);
-                        countdown(Integer.parseInt(hours), choosePlace);
-                        i++;
+            System.out.print("press 0 to quit\nhow many places(max 10): ");
+             placeNum = input.nextLine();
+            
+            if(placeNum.equals("1") ||placeNum.equals("2") || placeNum.equals("3") || placeNum.equals("4") || placeNum.equals("5") || placeNum.equals("6") || placeNum.equals("7") || placeNum.equals("8") || placeNum.equals("9") || placeNum.equals("10")){
+                System.out.print("maximum:5hours\nuse time(in hours): ");
+                hours = input.nextLine();
+                if(hours.equals("1") || hours.equals("2") || hours.equals("3") || hours.equals("4") || hours.equals("5")){
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    displayPlaces();
+                    System.out.println("");
+                    System.out.println("choose " + placeNum + " places \n");
+                    int i=1;
+                    while(i != Integer.parseInt(placeNum)+1){
+                        System.out.print("select place " + i + ": ");
+                        choosePlace = input.nextInt();
+                        if(choosePlace<=50 && choosePlace>0){  
+                            places[choosePlace] = "\u001B[33m" + choosePlace + "\u001B[0m";
+                            endTime(Integer.parseInt(hours), choosePlace);
+                            countdown(Integer.parseInt(hours), choosePlace);
+                            i++;
+                        }
+                        else{
+                            System.out.println("Invalid");
+                        }
                     }
-                    else{
-                        System.out.println("Invalid");
-                    }
+                    System.out.println("\u001B[35m" + placeNum + " places" + "\u001B[0m");
+                    System.out.println("\u001B[35m" + hours + " hours each" + "\u001B[0m");
+                    System.out.println("\u001B[35m" + "Total Payment: " + "RM" + Integer.parseInt(placeNum)*Integer.parseInt(hours)*4 + "\u001B[0m");
+                    total_income = total_income + (Integer.parseInt(placeNum)*Integer.parseInt(hours)*4);
+                    System.out.print("Start time : "); 
+                    displayTime();
+                    System.out.println("0.done\n2.edit");
+                    
                 }
-                System.out.println("\u001B[35m" + placeNum + " places" + "\u001B[0m");
-                System.out.println("\u001B[35m" + hours + " hours each" + "\u001B[0m");
-                System.out.println("\u001B[35m" + "Total Payment: " + "RM" + Integer.parseInt(placeNum)*Integer.parseInt(hours)*4 + "\u001B[0m");
-                total_income = total_income + (Integer.parseInt(placeNum)*Integer.parseInt(hours)*4);
-                System.out.print("Start time : "); 
-                displayTime();
-                System.out.println("0.done\n2.edit");
-                
+                else{
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println("invalid input , please re-enter");
+                    register();
+                }
+
+            }
+            else if(placeNum.equals("0")){
+                System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    displayPlaces();
+                    Menu();
             }
             else{
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                System.out.println("invalid input , please re-enter");
+                System.out.println("error");
                 register();
             }
-
-        }
-        else if(placeNum.equals("0")){
-            System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                Menu();
-        }
-        else{
-            System.out.println("error");
-            register();
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         
         
@@ -148,70 +152,74 @@ public class menu {
     }
 
     public void updateStatus(){
-        Scanner input = new Scanner(System.in);
-        String choice = "0";
-        String placeNum;
-        displayPlaces();
+        try (Scanner input = new Scanner(System.in)) {
+            String choice = "0";
+            String placeNum;
+            displayPlaces();
 
-        while(choice != "-1"){
-            System.out.print("press -1 to exit\nPlaces: ");
-            placeNum = input.nextLine();
-            if(!"-1".equals(placeNum) && (placeNum.contains("1")  || placeNum.contains("2") || placeNum.contains("3") || placeNum.contains("4") || placeNum.contains("5") || placeNum.contains("6") || placeNum.contains("7") || placeNum.contains("8") ||placeNum.contains("9"))){
-                if(Integer.parseInt(placeNum) <= 50){
+            while(choice != "-1"){
+                System.out.print("press -1 to exit\nPlaces: ");
+                placeNum = input.nextLine();
+                if(!"-1".equals(placeNum) && (placeNum.contains("1")  || placeNum.contains("2") || placeNum.contains("3") || placeNum.contains("4") || placeNum.contains("5") || placeNum.contains("6") || placeNum.contains("7") || placeNum.contains("8") ||placeNum.contains("9"))){
+                    if(Integer.parseInt(placeNum) <= 50){
+                        System.out.print("\033[H\033[2J");  
+                        System.out.flush();
+                        displayPlaces();
+                        MenuUpdateInUseStatus();
+                        System.out.print(placeNum + " to --> ");
+                        choice = input.nextLine();
+                        if(choice.equals("1")){
+                            places[Integer.parseInt(placeNum)]="\u001B[32m" + placeNum + "\u001B[0m";
+                            System.out.print("\033[H\033[2J");  
+                            System.out.flush();
+                            displayPlaces();
+                            System.out.println(placeNum + " become available\n");
+                            times[Integer.parseInt(placeNum)] = "\u001B[32m" + "available" + "\u001B[0m\n";
+                        }
+                        else if(choice.equals("2")){
+                            places[Integer.parseInt(placeNum)]="\u001B[31m" + placeNum + "\u001B[0m";
+                            System.out.print("\033[H\033[2J");  
+                            System.out.flush();
+                            displayPlaces();
+                            System.out.println(placeNum + " become unavailable\n");
+                            times[Integer.parseInt(placeNum)] = "\u001B[31m" + "unavailable" + "\u001B[0m\n";
+                        }
+                        else if(choice.equals("3")){
+                            places[Integer.parseInt(placeNum)]="\u001B[33m" + placeNum + "\u001B[0m";
+                            System.out.print("\033[H\033[2J");  
+                            System.out.flush();
+                            displayPlaces();
+                            System.out.println(placeNum + " become in use\n");
+                            times[Integer.parseInt(placeNum)] = "\u001B[33m" + "in-use" + "\u001B[0m\n";
+                            
+                        }
+                        else{
+                            System.out.println("invalid\n");
+                        }
+                    }
+                    else{
+                        System.out.println("invalid");
+                    }
+                }
+                else if(placeNum.equals("-1")){
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                     displayPlaces();
-                    MenuUpdateInUseStatus();
-                    System.out.print(placeNum + " to --> ");
-                    choice = input.nextLine();
-                    if(choice.equals("1")){
-                        places[Integer.parseInt(placeNum)]="\u001B[32m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become available\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[32m" + "available" + "\u001B[0m\n";
-                    }
-                    else if(choice.equals("2")){
-                        places[Integer.parseInt(placeNum)]="\u001B[31m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become unavailable\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[31m" + "unavailable" + "\u001B[0m\n";
-                    }
-                    else if(choice.equals("3")){
-                        places[Integer.parseInt(placeNum)]="\u001B[33m" + placeNum + "\u001B[0m";
-                        System.out.print("\033[H\033[2J");  
-                        System.out.flush();
-                        displayPlaces();
-                        System.out.println(placeNum + " become in use\n");
-                        times[Integer.parseInt(placeNum)] = "\u001B[33m" + "in-use" + "\u001B[0m\n";
-                        
-                    }
-                    else{
-                        System.out.println("invalid\n");
-                    }
+                    Menu();
+                    break;
                 }
                 else{
-                    System.out.println("invalid");
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println("Invalid input");
+                    updateStatus();
+                    break;
                 }
-            }
-            else if(placeNum.equals("-1")){
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                Menu();
-                break;
-            }
-            else{
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                System.out.println("Invalid input");
-                updateStatus();
-                break;
-            }
 
+            }
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         
@@ -237,30 +245,34 @@ public class menu {
     }
 
     public void status(){
-        Scanner input = new Scanner(System.in);
-        String enter = "null";
+        try (Scanner input = new Scanner(System.in)) {
+            String enter = "null";
 
-        while(!"0".equals(enter)){
-            System.out.print("Enter 0 to quit\nPlace to check: ");
-            enter = input.nextLine();
-            if(enter.contains("1") || enter.contains("2") || enter.contains("3") || enter.contains("4") || enter.contains("5") || enter.contains("6") || enter.contains("7") || enter.contains("8") ||enter.contains("9")){
-                if(Integer.parseInt(enter)<=50 && Integer.parseInt(enter)>0){
-                    checkStatus(Integer.parseInt(enter));
+            while(!"0".equals(enter)){
+                System.out.print("Enter 0 to quit\nPlace to check: ");
+                enter = input.nextLine();
+                if(enter.contains("1") || enter.contains("2") || enter.contains("3") || enter.contains("4") || enter.contains("5") || enter.contains("6") || enter.contains("7") || enter.contains("8") ||enter.contains("9")){
+                    if(Integer.parseInt(enter)<=50 && Integer.parseInt(enter)>0){
+                        checkStatus(Integer.parseInt(enter));
+                    }
+                    else{
+                        System.out.println("invalid");
+                    }
+                }
+                else if(enter.equals("0")){
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    displayPlaces();
+                    Menu();
                 }
                 else{
                     System.out.println("invalid");
                 }
+                
             }
-            else if(enter.equals("0")){
-                System.out.print("\033[H\033[2J");  
-                System.out.flush();
-                displayPlaces();
-                Menu();
-            }
-            else{
-                System.out.println("invalid");
-            }
-            
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     
